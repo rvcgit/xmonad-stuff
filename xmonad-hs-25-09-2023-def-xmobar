@@ -125,7 +125,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
  
     -- launch dmenu
     --, ((modm,               xK_p     ), spawn "dmenu_run -fn -bitstream-*-*-*-*-*-11-*-*-*-*-*-*-*")
-    , ((modm,               xK_p     ), spawn "dmenu_recency  -b -i -fn cinnamonroll-12:bold -nb '#1e1e1e' -nf '#888888' -sb '#FFFF84' -sf '#1e1e1e'")
+    , ((modm,               xK_p     ), spawn "dmenu_recency  -b -i -fn cinnamonroll-12 -nb '#1e1e1e' -nf '#888888' -sb '#FFFF84' -sf '#1e1e1e'")
 --    , ((modm .|. controlMask, xK_m     ), spawn "mygtkmenui -- ~/.config/GTKmenu/myGTKmenu.txt")
     , ((modm .|. controlMask, xK_p), spawn "gMenu")
     , ((modm .|. controlMask, xK_m), spawn "rofi -modi drun -lines 12 -padding 18 -width 60 -location 0 -show drun -columns 3 -font 'Comfortaa Light 8'")
