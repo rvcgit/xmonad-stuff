@@ -108,7 +108,7 @@ myWorkspaces    = [
                    " 7ven ", " E8 ", " 9ine "
                   ]
 
-startupWorkspace = "α" -- which workspace do you want to be on after launch?
+startupWorkspace = " OnE " -- which workspace do you want to be on after launch?
  
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -143,53 +143,53 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. controlMask, xK_f     ), spawn "pcmanfm")    
  
      -- Rotate through the available layout algorithms
-    , ((modm,               xK_space ), sendMessage NextLayout)
+    , ((modm, xK_space ), sendMessage NextLayout)
  
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
  
     -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
+    , ((modm, xK_n ), refresh)
  
     -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
+    , ((modm, xK_Tab ), windows W.focusDown)
  
     -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    , ((modm,  xK_j ), windows W.focusDown)
  
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,  xK_k ), windows W.focusUp  )
  
     -- Move focus to the master window
-    , ((modm,               xK_o     ), windows W.focusMaster  )
+    , ((modm,  xK_o ), windows W.focusMaster  )
 
     --minimize winwdows
---    , ((modm,               xK_m     ), withFocused minimizeWindow)
---    , ((modm .|. shiftMask, xK_m     ), sendMessage RestoreNextMinimizedWin)
+--    , ((modm, xK_m ), withFocused minimizeWindow)
+--    , ((modm .|. shiftMask, xK_m ), sendMessage RestoreNextMinimizedWin)
  
     -- Swap the focused window and the master window
-    , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm,  xK_Return), windows W.swapMaster)
  
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_j ), windows W.swapDown  )
  
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_k ), windows W.swapUp    )
  
     -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
+    , ((modm,  xK_h ), sendMessage Shrink)
  
     -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
+    , ((modm,  xK_l ), sendMessage Expand)
  
     -- Push window back into tiling
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    , ((modm,  xK_t  ), withFocused $ windows . W.sink)
  
     -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm , xK_comma ), sendMessage (IncMasterN 1))
  
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm  , xK_period), sendMessage (IncMasterN (-1)))
  
     -- toggle the status bar gap (used with avoidStruts from Hooks.ManageDocks)
     , ((modm , xK_b ), sendMessage ToggleStruts)
@@ -198,13 +198,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
  
     -- Restart xmonad
---       , ((modm              , xK_q     ), spawn "pkill conky dzen2 trayer && restart "xmonad"  True)
-    , ((modm              , xK_q     ), restart "xmonad"  True)
+--       , ((modm , xK_q ), spawn "pkill conky dzen2 trayer && restart "xmonad"  True)
+    , ((modm , xK_q ), restart "xmonad"  True)
 
     --lock screen
     , ((modm .|. shiftMask, xK_l ), spawn "i3exit lock")
     --exit options
-    , ((modm              , xK_End ), spawn "EXIT")
+    , ((modm  , xK_End ), spawn "EXIT")
 
     -- Shrink tile
     , ((modm, xK_a), sendMessage MirrorShrink)
@@ -228,18 +228,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0, xF86XK_AudioNext), spawn "mpc next;mpdnotify")
     , ((0, xF86XK_AudioPrev), spawn "mpc prev;mpdnotify")
     -- screenshot
-    , ((0, xK_Print),                   spawn "sleep 0.2; scrot -s")
-    , ((modm, xK_Print),                spawn "scrot -d5 xmonad_%T.png -e 'mv $f ~/shots'")
+    , ((0, xK_Print), spawn "sleep 0.2; scrot -s")
+    , ((modm, xK_Print), spawn "scrot -d5 xmonad_%T.png -e 'mv $f ~/shots'")
     -- Cycle through Workspace
-    , ((modm,               xK_Right),  nextWS)
-    , ((modm,               xK_Left),   prevWS)
+    , ((modm,  xK_Right),  nextWS)
+    , ((modm,  xK_Left),   prevWS)
     , ((modm .|. shiftMask, xK_Right),  shiftToNext)
     , ((modm .|. shiftMask, xK_Left),    shiftToPrev)
-    , ((modm,               xK_Up), nextScreen) --For dual monitor setup
-    , ((modm,               xK_Down), prevScreen) --For dual monitor setup
+    , ((modm,  xK_Up), nextScreen) --For dual monitor setup
+    , ((modm,  xK_Down), prevScreen) --For dual monitor setup
     , ((modm .|. shiftMask, xK_Up), shiftNextScreen) --For dual monitor setup
     , ((modm .|. shiftMask, xK_Down),  shiftPrevScreen) --For dual monitor setup
-    , ((modm,               xK_z),     toggleWS)
+    , ((modm,  xK_z),     toggleWS)
     ]
     ++
        
@@ -326,21 +326,21 @@ myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
 --
 myManageHook = composeAll
     [ className =? "Pcmanfm"        --> doF (W.shift " tWo ")
-    , className =? "Terminator"       --> doF (W.shift " tWo ")
-    , className =? "Gedit"         --> doF (W.shift " fOuR ")
+    , className =? "Terminator"     --> doF (W.shift " tWo ")
+    , className =? "Gedit"          --> doF (W.shift " fOuR ")
     , className =? "lxappearance"   --> doCenterFloat
     , className =? "Customize Look and Feel" --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore 
-    , className =? "gcolor3" --> doIgnore
-    , className =? "oblogout" --> doIgnore
-    , isFullscreen --> doFullFloat 
+    , className =? "gcolor3"        --> doIgnore
+    , className =? "oblogout"       --> doIgnore
+    , isFullscreen                  --> doFullFloat 
     , className =? "onlyoffice Desktop Editors" --> doF (W.shift " FiVe ")
-    , className =? "Gimp-2.10" --> doF (W.shift " ThReE ")
-    , className =? "Gimp" --> doF (W.shift " ThReE ")
-    , className =? "Feh" --> doF (W.shift " fOuR ")
-    , className =? "firefox" --> doF (W.shift " OnE ")
-   , className =? "Navigator" --> doF (W.shift " OnE ")
+    , className =? "Gimp-2.10"      --> doF (W.shift " ThReE ")
+    , className =? "Gimp"           --> doF (W.shift " ThReE ")
+    , className =? "Feh"            --> doF (W.shift " fOuR ")
+    , className =? "firefox"        --> doF (W.shift " OnE ")
+   , className =? "Navigator"       --> doF (W.shift " OnE ")
       , className =? "Virt-manager" --> doF (W.shift " FiVe ")
     ]
     
@@ -385,13 +385,13 @@ myStartupHook = do
 --
 
 myPP = xmobarPP { 
-  ppCurrent = xmobarColor "lightsalmon" "" ,
-  ppTitle = (\str -> "" ), 
-  ppLayout = (\str -> ""),
-  ppHidden = (xmobarColor "slategray" ""),
+  ppCurrent   = xmobarColor "lightsalmon" "" ,
+  ppTitle     = (\str -> "" ), 
+  ppLayout    = (\str -> ""),
+  ppHidden    = (xmobarColor "slategray" ""),
   ppHiddenNoWindows = (\str -> ""),
-  ppUrgent = xmobarColor "indianred" "" ,
-  ppOrder = \(ws:l:r) -> ws:r
+  ppUrgent    = xmobarColor "indianred" "" ,
+  ppOrder     = \(ws:l:r) -> ws:r
 }
 --- added to set WS issuewithdzen comment out if error return
 myLogHook = do
@@ -415,9 +415,9 @@ xmobarTitleColor = "beige"
 xmobarCurrentWorkspaceColor = "gold"
 
 main = do
---  dzenRightBar <- spawnPipe "~/.bin/dzenXmobar" -- Comment out if total xmobar is needed
+--  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar" -- Comment out if total xmobar is needed
 
---  dzenLeftBar <- spawnPipe "xmobar ~/.xmobar.hs"   -- xmobar for workspaces + dzen2 for others
+--  dzenLeftBar <- spawnPipe "xmobar ~/.xmobar-workspaces.hs"   -- xmobar for workspaces + dzen2 for others
 --  dzenLeftBar <- spawnPipe myXmonadBar  -- exclusive dzen2bar with myXmonadBar
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"  -- uncomment if total xmobar is needed
 
@@ -444,11 +444,11 @@ main = do
 --
 defaults = def {
       -- simple stuff
-        terminal                        = myTerminal,
-        focusFollowsMouse       = myFocusFollowsMouse,
-        borderWidth             = myBorderWidth,
+        terminal           = myTerminal,
+        focusFollowsMouse  = myFocusFollowsMouse,
+        borderWidth        = myBorderWidth,
         modMask            = myModMask,
---        numlockMask        = myNumlockMask,
+--        numlockMask      = myNumlockMask,
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
@@ -458,7 +458,7 @@ defaults = def {
         mouseBindings      = myMouseBindings,
  
       -- hooks, layouts
-      --  handleEventHook    = ewmhFullscreen,
+      -- handleEventHook   = ewmhFullscreen,
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         logHook            = myLogHook,
