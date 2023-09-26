@@ -26,17 +26,13 @@ we=$(($X*24/1000)) # -w value w.r.t  X resolution for Exit Menu [extreme right]
 # alignment is always to right by default; change to left if you need
 w_mgr="$(wmctrl -m | grep Name:| awk '{print $NF}')"
 if [ "$w_mgr" != "dwm" ];then # non EWMH compliant
-	if [ $w_mgr = "i3" ] || [ $w_mgr = "XMonad" ] || [ $w_mgr = "herbstluftwm" ];then 
-		dock="true"
-		else
-		dock="false"
-	fi
 	if [ $y -lt 40 ]; then
 		edge="top"
 		else
 		edge="bottom"
 	fi
 alfa="0" #set your trayer bg alpha value [ 0 is opaque; to 255 full transparent ]
+dock="true" # by default XMonad needs trayer to be set in dock mode
 trayer --edge $edge --align right --distancefrom right --distance 5 \
 --widthtype request --heighttype pixel --height 18 \
 --transparent true --alpha $alfa --tint 0x111827 \
