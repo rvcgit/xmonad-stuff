@@ -108,7 +108,7 @@ myWorkspaces    = [
                    "  7ven ", "   E8 ", "   9ine "
                   ]
 
-startupWorkspace = "α" -- which workspace do you want to be on after launch?
+startupWorkspace = "   OnE " -- which workspace do you want to be on after launch?
  
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -124,78 +124,78 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
  
     -- launch dmenu
-    --, ((modm,               xK_p     ), spawn "dmenu_run -fn -bitstream-*-*-*-*-*-11-*-*-*-*-*-*-*")
-    , ((modm,               xK_p     ), spawn "dmenu_recency  -b -i -fn cinnamonroll-12:bold -nb '#1e1e1e' -nf '#888888' -sb '#FFFF84' -sf '#1e1e1e'")
---    , ((modm .|. controlMask, xK_m     ), spawn "mygtkmenui -- ~/.config/GTKmenu/myGTKmenu.txt")
+    --, ((modm, xK_p  ), spawn "dmenu_run -fn -bitstream-*-*-*-*-*-11-*-*-*-*-*-*-*")
+    , ((modm,  xK_p   ), spawn "dmenu_recency  -b -i -fn cinnamonroll-12:bold -nb '#1e1e1e' -nf '#888888' -sb '#FFFF84' -sf '#1e1e1e'")
+--    , ((modm .|. controlMask, xK_m  ), spawn "mygtkmenui -- ~/.config/GTKmenu/myGTKmenu.txt")
     , ((modm .|. controlMask, xK_p), spawn "gMenu")
     , ((modm .|. controlMask, xK_m), spawn "rofi -modi drun -lines 12 -padding 18 -width 60 -location 0 -show drun -columns 3 -font 'Comfortaa Light 8'")
-    , ((modm,               xK_d     ), runOrRaisePrompt largeXPConfig)
+    , ((modm, xK_d  ), runOrRaisePrompt largeXPConfig)
     -- launch gmrun
-    , ((modm .|. shiftMask, xK_F2     ), spawn "gmrun")
+    , ((modm .|. shiftMask, xK_F2 ), spawn "gmrun")
  
     -- close focused window 
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm .|. shiftMask, xK_c ), kill)
 
     -- open web browser 
-    , ((modm .|. controlMask, xK_b     ), spawn "firefox")
+    , ((modm .|. controlMask, xK_b ), spawn "firefox")
     
     -- open filemanager pcmanfm
-    , ((modm .|. controlMask, xK_f     ), spawn "pcmanfm")    
+    , ((modm .|. controlMask, xK_f ), spawn "pcmanfm")    
  
      -- Rotate through the available layout algorithms
-    , ((modm,               xK_space ), sendMessage NextLayout)
+    , ((modm, xK_space ), sendMessage NextLayout)
  
     --  Reset the layouts on the current workspace to default
     , ((modm .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf)
  
     -- Resize viewed windows to the correct size
-    , ((modm,               xK_n     ), refresh)
+    , ((modm, xK_n ), refresh)
  
     -- Move focus to the next window
-    , ((modm,               xK_Tab   ), windows W.focusDown)
+    , ((modm,  xK_Tab  ), windows W.focusDown)
  
     -- Move focus to the next window
-    , ((modm,               xK_j     ), windows W.focusDown)
+    , ((modm, xK_j ), windows W.focusDown)
  
     -- Move focus to the previous window
-    , ((modm,               xK_k     ), windows W.focusUp  )
+    , ((modm,  xK_k ), windows W.focusUp  )
  
     -- Move focus to the master window
-    , ((modm,               xK_o     ), windows W.focusMaster  )
+    , ((modm,  xK_o ), windows W.focusMaster  )
 
     --minimize winwdows
---    , ((modm,               xK_m     ), withFocused minimizeWindow)
---    , ((modm .|. shiftMask, xK_m     ), sendMessage RestoreNextMinimizedWin)
+--    , ((modm, xK_m ), withFocused minimizeWindow)
+--    , ((modm .|. shiftMask, xK_m ), sendMessage RestoreNextMinimizedWin)
  
     -- Swap the focused window and the master window
-    , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm,  xK_Return), windows W.swapMaster)
  
     -- Swap the focused window with the next window
-    , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
+    , ((modm .|. shiftMask, xK_j ), windows W.swapDown  )
  
     -- Swap the focused window with the previous window
-    , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
+    , ((modm .|. shiftMask, xK_k ), windows W.swapUp    )
  
     -- Shrink the master area
-    , ((modm,               xK_h     ), sendMessage Shrink)
+    , ((modm, xK_h ), sendMessage Shrink)
  
     -- Expand the master area
-    , ((modm,               xK_l     ), sendMessage Expand)
+    , ((modm, xK_l ), sendMessage Expand)
  
     -- Push window back into tiling
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    , ((modm , xK_t ), withFocused $ windows . W.sink)
  
     -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm , xK_comma ), sendMessage (IncMasterN 1))
  
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm , xK_period), sendMessage (IncMasterN (-1)))
  
     -- toggle the status bar gap (used with avoidStruts from Hooks.ManageDocks)
     , ((modm , xK_b ), sendMessage ToggleStruts)
  
     -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((modm .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
  
     -- Restart xmonad
 --       , ((modm              , xK_q     ), spawn "pkill conky dzen2 trayer && restart "xmonad"  True)
@@ -204,7 +204,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --lock screen
     , ((modm .|. shiftMask, xK_l ), spawn "i3exit lock")
     --exit options
-    , ((modm              , xK_End ), spawn "EXIT")
+    , ((modm , xK_End ), spawn "EXIT")
 
     -- Shrink tile
     , ((modm, xK_a), sendMessage MirrorShrink)
@@ -228,18 +228,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0, xF86XK_AudioNext), spawn "mpc next;mpdnotify")
     , ((0, xF86XK_AudioPrev), spawn "mpc prev;mpdnotify")
     -- screenshot
-    , ((0, xK_Print),                   spawn "sleep 0.2; scrot -s")
-    , ((modm, xK_Print),                spawn "scrot -d5 xmonad_%T.png -e 'mv $f ~/shots'")
+    , ((0, xK_Print),  spawn "sleep 0.2; scrot -s")
+    , ((modm, xK_Print), spawn "scrot -d5 xmonad_%T.png -e 'mv $f ~/shots'")
     -- Cycle through Workspace
-    , ((modm,               xK_Right),  nextWS)
-    , ((modm,               xK_Left),   prevWS)
+    , ((modm, xK_Right),  nextWS)
+    , ((modm, xK_Left),   prevWS)
     , ((modm .|. shiftMask, xK_Right),  shiftToNext)
     , ((modm .|. shiftMask, xK_Left),    shiftToPrev)
-    , ((modm,               xK_Up), nextScreen) --For dual monitor setup
-    , ((modm,               xK_Down), prevScreen) --For dual monitor setup
+    , ((modm, xK_Up), nextScreen) --For dual monitor setup
+    , ((modm, xK_Down), prevScreen) --For dual monitor setup
     , ((modm .|. shiftMask, xK_Up), shiftNextScreen) --For dual monitor setup
     , ((modm .|. shiftMask, xK_Down),  shiftPrevScreen) --For dual monitor setup
-    , ((modm,               xK_z),     toggleWS)
+    , ((modm, xK_z),     toggleWS)
     ]
     ++
        
@@ -261,7 +261,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
  
 toggleStrutsKey XConfig{modMask = modm} = (modm, xK_b )
-
  
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
@@ -307,8 +306,6 @@ myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
-
- 
 ------------------------------------------------------------------------
 -- Window rules:
  
@@ -326,21 +323,21 @@ myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
 --
 myManageHook = composeAll
     [ className =? "Pcmanfm"        --> doF (W.shift "   tWo ")
-    , className =? "Terminator"       --> doF (W.shift "   tWo ")
-    , className =? "vlc"         --> doF (W.shift "   fOuR ")
+    , className =? "Terminator"     --> doF (W.shift "   tWo ")
+    , className =? "vlc"            --> doF (W.shift "   fOuR ")
     , className =? "lxappearance"   --> doCenterFloat
     , className =? "Customize Look and Feel" --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore 
-    , className =? "gcolor3" --> doIgnore
-    , className =? "oblogout" --> doIgnore
-    , isFullscreen --> doFullFloat 
+    , className =? "gcolor3"        --> doIgnore
+    , className =? "oblogout"       --> doIgnore
+    , isFullscreen                  --> doFullFloat 
     , className =? "onlyoffice Desktop Editors" --> doF (W.shift "   FiVe ")
-    , className =? "Gimp-2.10" --> doF (W.shift "   ThReE ")
-    , className =? "Gimp" --> doF (W.shift "   ThReE ")
-    , className =? "Feh" --> doF (W.shift "   fOuR ")
-    , className =? "firefox" --> doF (W.shift "  OnE ")
-   , className =? "Navigator" --> doF (W.shift "   OnE ")
+    , className =? "Gimp-2.10"      --> doF (W.shift "   ThReE ")
+    , className =? "Gimp"           --> doF (W.shift "   ThReE ")
+    , className =? "Feh"            --> doF (W.shift "   fOuR ")
+    , className =? "firefox"        --> doF (W.shift "  OnE ")
+   , className =? "Navigator"       --> doF (W.shift "   OnE ")
       , className =? "Virt-manager" --> doF (W.shift "FiVe")
     ]
     
@@ -385,13 +382,13 @@ myStartupHook = do
 --
 
 myPP = xmobarPP { 
-  ppCurrent = xmobarColor "lightsalmon" "" ,
-  ppTitle = (\str -> "" ), 
-  ppLayout = (\str -> ""),
-  ppHidden = (xmobarColor "slategray" ""),
+  ppCurrent   = xmobarColor "lightsalmon" "" ,
+  ppTitle     = (\str -> "" ), 
+  ppLayout    = (\str -> ""),
+  ppHidden    = (xmobarColor "slategray" ""),
   ppHiddenNoWindows = (\str -> ""),
-  ppUrgent = xmobarColor "indianred" "" ,
-  ppOrder = \(ws:l:r) -> ws:r
+  ppUrgent    = xmobarColor "indianred" "" ,
+  ppOrder     = \(ws:l:r) -> ws:r
 }
 --- added to set WS issuewithdzen comment out if error return
 myLogHook = do
@@ -441,11 +438,11 @@ main = do
 --
 defaults = def {
       -- simple stuff
-        terminal                        = myTerminal,
-        focusFollowsMouse       = myFocusFollowsMouse,
-        borderWidth             = myBorderWidth,
+        terminal           = myTerminal,
+        focusFollowsMouse  = myFocusFollowsMouse,
+        borderWidth        = myBorderWidth,
         modMask            = myModMask,
---        numlockMask        = myNumlockMask,
+--        numlockMask      = myNumlockMask,
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
