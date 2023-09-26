@@ -338,7 +338,7 @@ myManageHook = composeAll
     , className =? "Feh"            --> doF (W.shift "   fOuR ")
     , className =? "firefox"        --> doF (W.shift "  OnE ")
    , className =? "Navigator"       --> doF (W.shift "   OnE ")
-      , className =? "Virt-manager" --> doF (W.shift "FiVe")
+      , className =? "Virt-manager" --> doF (W.shift "   FiVe ")
     ]
     
  
