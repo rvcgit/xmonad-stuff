@@ -412,7 +412,7 @@ xmobarTitleColor = "beige"
 xmobarCurrentWorkspaceColor = "gold"
 
 main = do
-  dzenRightBar <- spawnPipe "~/.bin/dzenXmobar"
+  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
   dzenLeftBar <- spawnPipe "xmobar ~/.xmobar-workspaces.hs"   -- xmobar for workspaces + dzen2 for others
 --  dzenLeftBar <- spawnPipe myXmonadBar  -- exclusive dzen2bar with myXmonadBar
 --  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
