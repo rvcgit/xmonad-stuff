@@ -35,6 +35,8 @@ import XMonad.Actions.Plane
 import XMonad.Prompt
 import XMonad.Prompt.RunOrRaise (runOrRaisePrompt)
 import XMonad.Prompt.AppendFile (appendFilePrompt)
+import qualified Data.Map.Strict as Map
+import Data.Maybe (fromJust)
 
 
 barFont  = "UbuntuMono Nerd Font 9:antialias=true"
@@ -102,19 +104,16 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-
-xmobarEscape = concatMap doubleLts
-  where doubleLts '<' = "<<"
-        doubleLts x    = [x]
 myWorkspaces            :: [String]
-myWorkspaces            = clickable . (map xmobarEscape) $ [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "]
-                                                                              
-  where                                                                       
-         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                             (i,ws) <- zip [1..9] l,                                        
-                            let n = i ]
-
-startupWorkspace = "   α " -- which workspace do you want to be on after launch?
+myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "]                                                                              
+--  where                                                                       
+--         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
+--                             (i,ws) <- zip [1..9] l,                                        
+--                           let n = i ]
+myWorkspaceIndices = Map.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
+clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
+    where i = fromJust $ Map.lookup ws myWorkspaceIndices
+startupWorkspace = " 1:α " -- which workspace do you want to be on after launch?
  
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -338,10 +337,11 @@ myManageHook = composeAll
     , className =? "gcolor3"        --> doIgnore
     , className =? "oblogout"       --> doIgnore
     , isFullscreen                  --> doFullFloat 
-    , className =? "onlyoffice Desktop Editors" --> doF (W.shift " 5:ϵ ")
+    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 5:ϵ ")
     , className =? "Gimp-2.10"      --> doF (W.shift " 3:γ ")
     , className =? "Gimp"           --> doF (W.shift " 3:γ ")
-    , className =? "Feh"            --> doF (W.shift " 4:δ ")
+    , className =? "feh"            --> doF (W.shift " 4:δ ")
+    , className =? "nitrogen"            --> doF (W.shift " 4:δ ")    
     , className =? "firefox"        --> doF (W.shift " 1:α ")
    , className =? "Navigator"       --> doF (W.shift " 1:α ")
       , className =? "Virt-manager" --> doF (W.shift " 5:ϵ ")
@@ -431,7 +431,8 @@ main = do
             ppOutput = hPutStrLn dzenLeftBar
          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 72
           , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#091020"
-          , ppHidden = (xmobarColor "slategray" "")
+          , ppHidden = xmobarColor "#9a9ca0" "" . clickable
+          , ppHiddenNoWindows = xmobarColor "darkslategray" "" . clickable
           , ppLayout = (xmobarColor "#111827" "")          
           , ppUrgent = (xmobarColor "#ed2939" "" .wrap "[" "]")          
           , ppSep = "   "
