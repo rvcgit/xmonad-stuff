@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+# xmobar vol status
+vol="$(amixer get Master | grep Playback | tail -n1 | rev | awk '{print$2}' | rev | sed 's/\[//g' | sed 's/\]//g')"
+echo $vol

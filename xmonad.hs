@@ -37,9 +37,9 @@ import XMonad.Prompt.RunOrRaise (runOrRaisePrompt)
 import XMonad.Prompt.AppendFile (appendFilePrompt)
 
 
-barFont  = "Inconsolata Nerd Font 6:antialias=true"
-barXFont = "FiraCode Nerd Font 6:antialias=true"
-xftFont = "xft:FiraCode Nerd Font 6:antialias=true"
+barFont  = "UbuntuMono Nerd Font 9:antialias=true"
+barXFont = "FiraCode Nerd Font 7:antialias=true"
+xftFont = "xft:Inconsolata Nerd Font 8:antialias=true"
 
 
 mXPConfig :: XPConfig
@@ -114,7 +114,7 @@ myWorkspaces            = clickable . (map xmobarEscape) $ [" 1:α "," 2:β "," 
                              (i,ws) <- zip [1..9] l,                                        
                             let n = i ]
 
-startupWorkspace = "   OnE " -- which workspace do you want to be on after launch?
+startupWorkspace = "   α " -- which workspace do you want to be on after launch?
  
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -204,7 +204,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
  
     -- Restart xmonad
-    , ((modm, xK_q), spawn "killall conky dzen2 trayer mpd ; xmonad --recompile; xmonad --restart")
+    , ((modm, xK_q), spawn "killall conky dzen2 trayer mpd xmobar; xmonad --recompile; xmonad --restart")
 --    , ((modm              , xK_q     ), restart "xmonad"  True)
 
     --lock screen
@@ -301,7 +301,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = spacing 2 $ gaps [(U,22), (L,2), (R,2), (D,2)] $ ResizableTall nmaster delta ratio []
+     tiled   = spacing 2 $ gaps [(U,2), (L,2), (R,2), (D,2)] $ ResizableTall nmaster delta ratio []
  
      -- The default number of windows in the master pane
      nmaster = 1
@@ -380,7 +380,7 @@ myStartupHook = do
     spawn "$HOME/scripts/startapps_xmonad"
     spawn "synclient HorizTwoFingerScroll=1"
     spawn "mpd"
-    spawn "~/.bin/trayer-dtr" -- trayer with top right dock options
+
    
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -389,8 +389,8 @@ myStartupHook = do
 --
 
 myPP = xmobarPP { 
-  ppCurrent   = xmobarColor "lightsalmon" "" ,
-  ppTitle     = (\str -> "" ), 
+  ppCurrent   = xmobarColor "gold" "" ,
+  --ppTitle     = (\str -> "" ), 
   ppLayout    = (\str -> ""),
   ppHidden    = (xmobarColor "slategray" ""),
   ppHiddenNoWindows = (\str -> ""),
@@ -410,7 +410,8 @@ myLogHook = do
 
 --main = xmonad =<< statusBar "xmobar ~/.xmonad/statusbar.hs" myPP toggleStrutsKey defaults 
 
-myXmonadBar = "conky -c ~/.xmonad/xmonadWSConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -ta l -x 5 -y 2 -fn 'Inconsolata Nerd Font:pixelsize=11:antialias=true' -w 290 -expand right"
+--myXmonadBar = "conky -c ~/.xmonad/xmonadWSConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -ta l -x 5 -y 2 -fn 'Inconsolata Nerd Font:pixelsize=11:antialias=true' -w 290 -expand right" --for no dzenbar
+--myXmonadBar = "dzen2 -x '5' -y '2' -h '24' -w '202' -ta 'l' -fg '#FFFFFF' -bg '#111827'" --XmobarWSConky use
 -- Color of current window title in xmobar.
   -- Used to be #00CC00
 xmobarTitleColor = "beige"
@@ -419,22 +420,23 @@ xmobarTitleColor = "beige"
 xmobarCurrentWorkspaceColor = "gold"
 
 main = do
---  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
---  dzenLeftBar <- spawnPipe "xmobar ~/.xmonad/xmobar-workspaces.hs"   -- xmobar for workspaces + dzen2 for others
+  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
+  dzenLeftBar <- spawnPipe "xmobar ~/.xmonad/xmobar-workspaces.hs"   -- xmobar for workspaces + dzen2 for others
 --  dzenLeftBar <- spawnPipe myXmonadBar  -- exclusive dzen2bar with myXmonadBar
-  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+-- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
 
   xmonad $ docks $ defaults {
-      logHook = dynamicLogWithPP $ xmobarPP { -- to be used for exclusively dzen2 bars [ no xmobar]
---      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
-            ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 65
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
+--      logHook = dynamicLogWithPP $ xmobarPP { -- to be used for exclusively dzen2 bars [ no xmobar]
+      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
+            ppOutput = hPutStrLn dzenLeftBar
+         , ppTitle = xmobarColor xmobarTitleColor "" . shorten 72
+          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#091020"
           , ppHidden = (xmobarColor "slategray" "")
           , ppLayout = (xmobarColor "#111827" "")          
           , ppUrgent = (xmobarColor "#ed2939" "" .wrap "[" "]")          
           , ppSep = "   "
-          , ppOrder = \(ws:l:r) -> ws:r
+--          , ppOrder = \(ws:l:r) -> ws:r
+          , ppOrder = \(ws:_) -> [ws]          
       }
       , manageHook = manageDocks <+> myManageHook
       , startupHook = myStartupHook
