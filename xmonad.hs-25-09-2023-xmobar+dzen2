@@ -331,19 +331,20 @@ myManageHook = composeAll
     , className =? "Terminator"     --> doF (W.shift " 2:β ")
     , className =? "vlc"            --> doF (W.shift " 4:δ ")
     , className =? "lxappearance"   --> doCenterFloat
+    , className =? "gcolor3"   --> doCenterFloat    
     , className =? "Customize Look and Feel" --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore 
     , className =? "gcolor3"        --> doIgnore
     , className =? "oblogout"       --> doIgnore
     , isFullscreen                  --> doFullFloat 
-    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 5:ϵ ")
+    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 3:γ ")
     , className =? "Gimp-2.10"      --> doF (W.shift " 3:γ ")
-    , className =? "Gimp"           --> doF (W.shift " 3:γ ")
+    , className =? "Gedit"           --> doF (W.shift " 2:β ")
     , className =? "feh"            --> doF (W.shift " 4:δ ")
-    , className =? "nitrogen"            --> doF (W.shift " 4:δ ")    
-    , className =? "firefox"        --> doF (W.shift " 1:α ")
-   , className =? "Navigator"       --> doF (W.shift " 1:α ")
+    , className =? "Nitrogen"            --> doF (W.shift " 4:δ ")    
+    , className =? "pamac-manager"        --> doF (W.shift " 4:δ ")
+   , className =? "firefox"       --> doF (W.shift " 1:α ")
       , className =? "Virt-manager" --> doF (W.shift " 5:ϵ ")
     ]
     
