@@ -4,17 +4,17 @@ Y="$(xrandr | grep '*' | uniq | awk '{print$1}' | cut -d 'x' -f2)"  # your verti
 XP="$(xdotool getmouselocation | awk '{print$1}' | sed 's/x://g')" #mouse coordinate X
 YP="$(xdotool getmouselocation | awk '{print$2}' | sed 's/y://g')" #mouse coordinate Y
 
-x1=$(($X*3/1000)) # workspaces bar X position [ 0.5 % of x resolution ]
+x1=$(($X*3/1000)) # workspaces bar X position [ 0.3 % of x resolution ]
 wl=$(($X*15/100)) # -w value w.r.t X resolution for left bar
 
-x2=$(($X*200/1000)) # Appmenu bar X position [ edit value "18.5%" to suit; current is 45% of x resolution ]
+x2=$(($X*20/100)) # Appmenu bar X position [ edit value "20%" to suit; current is 45% of x resolution ]
 wc=$(($X*381/1000)) # -w value w.r.t  X resolution for appmenu bar
 
-x3=$(($X*582/1000)) # title bar X position [edit the value "58.5%" to suit;current is 21% of x resolution ]
-wr=$(($X*300/1000)) # -w value w.r.t X resolution for xtitle bar
+x3=$(($X*582/1000)) # title bar X position [edit the value "58.2%" to suit;current is 21% of x resolution ]
+wr=$(($X*30/100)) # -w value w.r.t X resolution for xtitle bar
 
-x4=$(($X*885/1000)) # Exit button X position [ edit value to suit; current is 88.2% of x resolution ]
-we=$(($X*24/1000)) # -w value w.r.t  X resolution for Exit Menu [extreme right]
+x4=$(($X*885/1000)) # Exit button X position [ edit value to suit; current is 88.5% of x resolution ]
+we=$(($X*24/1000)) # -w value w.r.t  X resolution for Exit Menu [extreme right] 2.4% width
 
 # BOTTOM BAR
 # y=$(($Y-(995/1000*$Y))) # y offset from y resolution; current is 99.5% of Y resolution;
@@ -46,14 +46,17 @@ fi &
 #conky -c ~/.conky/dzenworkspaceConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -ta l -x $x1 -y $y -fn 'Inconsolata Nerd Font:pixelsize=11:antialias=true' -w $wl -expand right &
 
 ## kill all instances of conky and dzen2
-sleep 5 && conky -c ~/.xmonad/dzen2appsConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -w $wc -ta c -x $x2 -y $y -fn 'FiraCode Nerd Font:pixelsize=10:antialias=true' -dock &
 
-sleep 5 && conky -c ~/.xmonad/dzen2xtitleConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -w $wr -ta l -x $x3 -y $y -fn 'Inconsolata Nerd Font:pixelsize=12:antialias=true' -dock &
+conky -c ~/.xmonad/dzen2appsConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -w $wc -ta c -x $x2 -y $y -fn 'FiraCode Nerd Font:pixelsize=10:antialias=true' -dock &
+
+sleep 3 && conky -c ~/.xmonad/dzen2xtitleConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -w $wr -ta l -x $x3 -y $y -fn 'Inconsolata Nerd Font:pixelsize=12:antialias=true' -dock &
 
 sleep 5 && conky -c ~/.xmonad/dzen2ExitConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -bg '#ff7043' -w $we -ta l -x $x4 -y $y -fn 'FuraCode Nerd Font:pixelsize=10:antialias=true' -dock &
+# optional transparency
+#sleep 10 && exec `(transset .66 -n "dzen title" >/dev/null 2>&1 &)` &&
 
 ## deps for workspace and forecast
-location="" ## TYPE YOUR CITY NAME WITHIN QUOTES
+location="MY_CITY" ## TYPE YOUR CITY NAME WITHIN QUOTES
 sleep 5 && sh ~/.bin/dzenworkspaces.sh &
 sleep 15 && if [ "$(wmctrl -d | sed -n '/* /s///p' | awk '{print$NF}')" = " " ];then echo " " > /tmp/AWS;fi &
 while : ;do curl -s 'http://v1.wttr.in/$location\?MT' | tail -n33 | head -n30 > /tmp/asciiwttr;sleep 1801;done
