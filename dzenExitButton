@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+X="$(xrandr | grep '*' | uniq | awk '{print$1}' | cut -d 'x' -f1)"  # your horizontal screen resolution
+Y="$(xrandr | grep '*' | uniq | awk '{print$1}' | cut -d 'x' -f2)"  # your vertical screen resolution
+XP="$(xdotool getmouselocation | awk '{print$1}' | sed 's/x://g')" #mouse coordinate X
+YP="$(xdotool getmouselocation | awk '{print$2}' | sed 's/y://g')" #mouse coordinate Y
+
+x1=$(($X*3/1000)) # workspaces bar X position [ 0.5 % of x resolution ]
+wl=$(($X*15/100)) # -w value w.r.t X resolution for left bar
+
+x2=$(($X*200/1000)) # Appmenu bar X position [ edit value "18.5%" to suit; current is 45% of x resolution ]
+wc=$(($X*381/1000)) # -w value w.r.t  X resolution for appmenu bar
+
+x3=$(($X*582/1000)) # title bar X position [edit the value "58.5%" to suit;current is 21% of x resolution ]
+wr=$(($X*300/1000)) # -w value w.r.t X resolution for xtitle bar
+
+x4=$(($X*885/1000)) # Exit button X position [ edit value to suit; current is 88.2% of x resolution ]
+we=$(($X*24/1000)) # -w value w.r.t  X resolution for Exit Menu [extreme right]
+
+# BOTTOM BAR
+# y=$(($Y-(995/1000*$Y))) # y offset from y resolution; current is 99.5% of Y resolution;
+
+# TOP BAR
+ y=$(($Y*3/1000))  # y offser from y resolution; current is 0.3% of Y resolution; comment above line and uncomment this line to use TOP BAR
+conky -c ~/.xmonad/dzen2ExitConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -bg '#ff7043' -w $we -ta l -x $x4 -y $y -fn 'FuraCode Nerd Font:pixelsize=10:antialias=true' -dock &
+# optional transparency
+sleep 1 && exec `(transset .66 -n "dzen title" >/dev/null 2>&1 &)` &
