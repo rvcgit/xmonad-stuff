@@ -51,7 +51,7 @@ conky -c ~/.xmonad/dzen2appsConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=
 
 sleep 3 && conky -c ~/.xmonad/dzen2xtitleConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -w $wr -ta l -x $x3 -y $y -fn 'Inconsolata Nerd Font:pixelsize=12:antialias=true' -dock &
 
-sleep 5 && conky -c ~/.xmonad/dzen2ExitConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -bg '#ff7043' -w $we -ta l -x $x4 -y $y -fn 'FuraCode Nerd Font:pixelsize=10:antialias=true' -dock &
+sleep 5 && conky -c ~/.xmonad/dzen2ExitConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -bg '#d56c30' -w $we -ta l -x $x4 -y $y -fn 'FuraCode Nerd Font:pixelsize=10:antialias=true' -dock &
 # optional transparency
 #sleep 10 && exec `(transset .66 -n "dzen title" >/dev/null 2>&1 &)` &&
 
