@@ -39,9 +39,9 @@ import qualified Data.Map.Strict as Map
 import Data.Maybe (fromJust)
 
 
-barFont  = "UbuntuMono Nerd Font 9:antialias=true"
-barXFont = "FiraCode Nerd Font 7:antialias=true"
-xftFont = "xft:Inconsolata Nerd Font 8:antialias=true"
+barFont  = "Inconsolata Nerd Font 6:antialias=true"
+barXFont = "FiraCode Nerd Font 6:antialias=true"
+xftFont = "xft:FiraCode Nerd Font 6:antialias=true"
 
 
 mXPConfig :: XPConfig
@@ -105,21 +105,15 @@ myModMask       = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces            :: [String]
-myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "]                                                                              
---  where                                                                       
---         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
---                             (i,ws) <- zip [1..9] l,                                        
---                           let n = i ]
+myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "] 
 myWorkspaceIndices = Map.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
     where i = fromJust $ Map.lookup ws myWorkspaceIndices
 startupWorkspace = " 1:α " -- which workspace do you want to be on after launch?
- 
--- Border colors for unfocused and focused windows, respectively.
---
+
 myNormalBorderColor  = "blueviolet"
 myFocusedBorderColor = "gold"
- 
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -203,7 +197,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
  
     -- Restart xmonad
-    , ((modm, xK_q), spawn "killall conky dzen2 trayer mpd xmobar; xmonad --recompile; xmonad --restart")
+    , ((modm, xK_q), spawn "killall conky dzen2 trayer mpd ; xmonad --recompile; xmonad --restart")
 --    , ((modm              , xK_q     ), restart "xmonad"  True)
 
     --lock screen
@@ -300,7 +294,7 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = spacing 2 $ gaps [(U,2), (L,2), (R,2), (D,2)] $ ResizableTall nmaster delta ratio []
+     tiled   = spacing 2 $ gaps [(U,22), (L,2), (R,2), (D,2)] $ ResizableTall nmaster delta ratio []
  
      -- The default number of windows in the master pane
      nmaster = 1
@@ -346,8 +340,7 @@ myManageHook = composeAll
     , className =? "pamac-manager"        --> doF (W.shift " 4:δ ")
    , className =? "firefox"       --> doF (W.shift " 1:α ")
       , className =? "Virt-manager" --> doF (W.shift " 5:ϵ ")
-    ]
-    
+    ]  
  
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -381,7 +374,7 @@ myStartupHook = do
     spawn "$HOME/scripts/startapps_xmonad"
     spawn "synclient HorizTwoFingerScroll=1"
     spawn "mpd"
-
+    spawn "~/.bin/trayer-dtr" -- trayer with top right dock options
    
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -390,8 +383,8 @@ myStartupHook = do
 --
 
 myPP = xmobarPP { 
-  ppCurrent   = xmobarColor "gold" "" ,
-  --ppTitle     = (\str -> "" ), 
+  ppCurrent   = xmobarColor "lightsalmon" "" ,
+  ppTitle     = (\str -> "" ), 
   ppLayout    = (\str -> ""),
   ppHidden    = (xmobarColor "slategray" ""),
   ppHiddenNoWindows = (\str -> ""),
@@ -411,8 +404,7 @@ myLogHook = do
 
 --main = xmonad =<< statusBar "xmobar ~/.xmonad/statusbar.hs" myPP toggleStrutsKey defaults 
 
---myXmonadBar = "conky -c ~/.xmonad/xmonadWSConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -ta l -x 5 -y 2 -fn 'Inconsolata Nerd Font:pixelsize=11:antialias=true' -w 290 -expand right" --for no dzenbar
---myXmonadBar = "dzen2 -x '5' -y '2' -h '24' -w '202' -ta 'l' -fg '#FFFFFF' -bg '#111827'" --XmobarWSConky use
+myXmonadBar = "conky -c ~/.xmonad/xmonadWSConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -ta l -x 5 -y 2 -fn 'Inconsolata Nerd Font:pixelsize=11:antialias=true' -w 290 -expand right"
 -- Color of current window title in xmobar.
   -- Used to be #00CC00
 xmobarTitleColor = "beige"
@@ -421,24 +413,23 @@ xmobarTitleColor = "beige"
 xmobarCurrentWorkspaceColor = "gold"
 
 main = do
-  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
-  dzenLeftBar <- spawnPipe "xmobar ~/.xmonad/xmobar-workspaces.hs"   -- xmobar for workspaces + dzen2 for others
+--  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
+--  dzenLeftBar <- spawnPipe "xmobar ~/.xmonad/xmobar-workspaces.hs"   -- xmobar for workspaces + dzen2 for others
 --  dzenLeftBar <- spawnPipe myXmonadBar  -- exclusive dzen2bar with myXmonadBar
--- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+  xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
 
   xmonad $ docks $ defaults {
---      logHook = dynamicLogWithPP $ xmobarPP { -- to be used for exclusively dzen2 bars [ no xmobar]
-      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
-            ppOutput = hPutStrLn dzenLeftBar
-         , ppTitle = xmobarColor xmobarTitleColor "" . shorten 72
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#091020"
+      logHook = dynamicLogWithPP $ xmobarPP { -- to be used for exclusively dzen2 bars [ no xmobar]
+--      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
+            ppOutput = hPutStrLn xmproc
+          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 65
+          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
           , ppHidden = xmobarColor "#9a9ca0" "" . clickable
-          , ppHiddenNoWindows = xmobarColor "darkslategray" "" . clickable
+--          , ppHiddenNoWindows = xmobarColor "darkslategray" "" . clickable  --uncomment this if empty workspaces need to be displayed
           , ppLayout = (xmobarColor "#111827" "")          
           , ppUrgent = (xmobarColor "#ed2939" "" .wrap "[" "]")          
           , ppSep = "   "
---          , ppOrder = \(ws:l:r) -> ws:r
-          , ppOrder = \(ws:_) -> [ws]          
+          , ppOrder = \(ws:l:r) -> ws:r
       }
       , manageHook = manageDocks <+> myManageHook
       , startupHook = myStartupHook

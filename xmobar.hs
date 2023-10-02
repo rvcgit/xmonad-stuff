@@ -9,12 +9,12 @@ Config { font = "Inconsolata Nerd Font 8"
         --, position = TopW L 100
         , commands = [ --Run Weather "VASU" ["-t","<tempC>°C ","-L","19","-H","38",
                        --                   "--normal","#8ae234","--high","#ef2929","--low","#8cc4ff"] 3600
-                        Run Com "$HOME/scripts/openweather" ["-s", "-L","19","-H","38",
+                        Run Com "/home/rvc/scripts/openweather" ["-s", "-L","19","-H","38",
                                                                  "--normal","lightcyan","--high","crimson","--low","azure"] "weather" 1200
 --                        , Run Network "wlp6s0" ["-t","<rx>, <tx>","-H","200","-L","10","-h","#FFB6B0","-l","#CEFFAC","-n","#FFFFCC"] 10
---                      , Run Com "$HOME/scripts/netinfo.sh" [] "netinfo" 50
-                        , Run Com "$HOME/scripts/wifi.sh" [] "wifi" 20
-                        , Run Com "$HOME/.xmonad/get_vol.sh" [] "vol" 10
+--                      , Run Com "/home/rvc/scripts/netinfo.sh" [] "netinfo" 50
+                        , Run Com "/home/rvc/scripts/wifi.sh" [] "wifi" 20
+                        , Run Com "/home/rvc/.xmonad/get_vol.sh" [] "vol" 10
 --                        , Run MultiCpu ["-t", "<autototal>", "-p", "2", "-L","10","-H","50","--normal","#8ae234","--high","#ef2929"] 10
                         , Run Memory ["-t","<usedratio>%"] 10
                         --, Run Swap [] 10
@@ -23,7 +23,7 @@ Config { font = "Inconsolata Nerd Font 8"
                        , Run MPD ["-t", " <fc=greenyellow> </fc> <title>... ","-w", "20", "-c", "  "] 10
 --			, Run PipeReader "/tmp/.volume-pipe" "vol_pipe"
 --			, Run PipeReader "/tmp/.mpd-pipe" "mpd_pipe"
-                      , Run Com "$HOME/.xmonad/mpdstatus" [] "mpdstatus" 10
+                      , Run Com "/home/rvc/.xmonad/mpdstatus" [] "mpdstatus" 10
 --                        , Run UnsafeStdinReader
                         , Run CoreTemp ["-t", "<core0>°C & <core1>°C",
                                     "-L", "40", "-H", "60",
