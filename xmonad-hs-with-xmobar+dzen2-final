@@ -124,11 +124,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
  
     -- launch dmenu
-    --, ((modm, xK_p  ), spawn "dmenu_run -fn -bitstream-*-*-*-*-*-11-*-*-*-*-*-*-*")
     , ((modm,  xK_p   ), spawn "dmenu_recency  -b -i -fn cinnamonroll-12 -nb '#1e1e1e' -nf '#888888' -sb '#FFFF84' -sf '#1e1e1e'")
---  , ((modm .|. controlMask, xK_m  ), spawn "mygtkmenui -- ~/.config/GTKmenu/myGTKmenu.txt")
-    , ((modm .|. controlMask, xK_p), spawn "gMenu")
-    , ((modm .|. controlMask, xK_m), spawn "rofi -modi drun -lines 12 -padding 18 -width 60 -location 0 -show drun -columns 3 -font 'Comfortaa Light 8'")
+--    , ((modm .|. controlMask, xK_m  ), spawn "mygtkmenui -- ~/.config/GTKmenu/myGTKmenu.txt")
+    , ((modm .|. controlMask, xK_p), spawn "jgmenu_run")
+    , ((modm .|. shiftMask, xK_p), spawn "rofi -show drun -modi drun -location 7 -anchor 7 -theme-str '#window { width: 45ch; }' -no-sidebar-mode -theme-str '#list-view { xoffset: 30; yoffset: 30; lines: 9; dynamic: true; fixed-height: false; }'" )
     , ((modm, xK_d  ), runOrRaisePrompt largeXPConfig)
     -- launch gmrun
     , ((modm .|. shiftMask, xK_F2 ), spawn "gmrun")
