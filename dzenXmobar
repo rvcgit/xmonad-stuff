@@ -62,6 +62,6 @@ sleep 10 && conky -c ~/.xmonad/dzen2XMonadpanelConky | dzen2 -p -e 'enterslave=g
 #sleep 10 && exec `(transset .66 -n "dzen title" >/dev/null 2>&1 &)` &&
 
 ## deps for workspace and forecast
-location="Vapi" ## TYPE YOUR CITY NAME WITHIN QUOTES
+location="MY_CITY" ## TYPE YOUR CITY NAME WITHIN QUOTES
 sleep 15 && if [ "$(wmctrl -d | sed -n '/* /s///p' | awk '{print$NF}')" = " " ];then echo " " > /tmp/AWS;fi &
 while : ;do curl -s 'http://v1.wttr.in/$location\?MT' | tail -n33 | head -n30 > /tmp/asciiwttr;sleep 1801;done
