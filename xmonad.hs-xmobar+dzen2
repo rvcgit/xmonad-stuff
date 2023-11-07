@@ -105,7 +105,9 @@ myModMask       = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces            :: [String]
-myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "]                                                                              
+--myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "]  
+--myWorkspaces			= [" 1;௧ ", "2;௨ ", "3;௩ ", "4;௪ ", "5;௫ ", "6;௬ ", "7;௭ ", "8;௮ ", "9;௯ "] 
+myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ]                                                                           
 --  where                                                                       
 --         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
 --                             (i,ws) <- zip [1..9] l,                                        
@@ -113,12 +115,12 @@ myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ 
 myWorkspaceIndices = Map.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
     where i = fromJust $ Map.lookup ws myWorkspaceIndices
-startupWorkspace = " 1:α " -- which workspace do you want to be on after launch?
+startupWorkspace = " 1𓀡 " -- which workspace do you want to be on after launch?
  
 -- Border colors for unfocused and focused windows, respectively.
 --
 myNormalBorderColor  = "blueviolet"
-myFocusedBorderColor = "gold"
+myFocusedBorderColor = "springgreen"
  
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -325,27 +327,28 @@ myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
---
+--" 1;௧ ", "2;௨ ", "3;௩ ", "4;௪ ", "5;௫ ", "6;௬ ", "7;௭ ", "8;௮ ", "9;௯ "
+--myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ] 
 myManageHook = composeAll
-    [ className =? "Pcmanfm"        --> doF (W.shift " 2:β ")
-    , className =? "Terminator"     --> doF (W.shift " 2:β ")
-    , className =? "vlc"            --> doF (W.shift " 4:δ ")
+    [ className =? "Pcmanfm"        --> doF (W.shift " 2𓀢 ")
+    , className =? "Terminator"     --> doF (W.shift " 2𓀢 ")
+    , className =? "vlc"            --> doF (W.shift " 4𓀤 ")
     , className =? "lxappearance"   --> doCenterFloat
-    , className =? "gcolor3"   --> doCenterFloat    
+    , className =? "gcolor3"        --> doCenterFloat    
     , className =? "Customize Look and Feel" --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore 
     , className =? "gcolor3"        --> doIgnore
     , className =? "oblogout"       --> doIgnore
     , isFullscreen                  --> doFullFloat 
-    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 3:γ ")
-    , className =? "Gimp-2.10"      --> doF (W.shift " 3:γ ")
-    , className =? "Gedit"           --> doF (W.shift " 2:β ")
-    , className =? "feh"            --> doF (W.shift " 4:δ ")
-    , className =? "Nitrogen"            --> doF (W.shift " 4:δ ")    
-    , className =? "pamac-manager"        --> doF (W.shift " 4:δ ")
-   , className =? "firefox"       --> doF (W.shift " 1:α ")
-      , className =? "Virt-manager" --> doF (W.shift " 5:ϵ ")
+    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 3𓀣 ")
+    , className =? "Gimp"           --> doF (W.shift " 3𓀣 ")
+    , className =? "Gedit"          --> doF (W.shift " 2𓀢 ")
+    , className =? "feh"            --> doF (W.shift " 4𓀤 ")
+    , className =? "Nitrogen"       --> doF (W.shift " 4𓀤 ")    
+    , className =? "pamac-manager"  --> doF (W.shift " 4𓀤 ")
+    , className =? "firefox"        --> doF (W.shift " 1𓀡 ")
+      , className =? "Virt-manager" --> doF (W.shift " 5𓀥 ")
     ]
     
  
@@ -390,7 +393,7 @@ myStartupHook = do
 --
 
 myPP = xmobarPP { 
-  ppCurrent   = xmobarColor "gold" "" ,
+  ppCurrent   = xmobarColor "#32cd32" "" ,
   --ppTitle     = (\str -> "" ), 
   ppLayout    = (\str -> ""),
   ppHidden    = (xmobarColor "slategray" ""),
@@ -417,8 +420,10 @@ myLogHook = do
   -- Used to be #00CC00
 xmobarTitleColor = "beige"
 
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "gold"
+-- Color of current/Urgent/Hidden workspace in xmobar.
+xmobarCurrentWorkspaceColor = "#ffbd01" --prev flourescent blue ##11ffee; current neongold,ffbd01
+xmobarUrgentWorkspaceColor = "#ff6112" --complimentary red for fl blue
+xmobarHiddenWorkspaceColor = "#a9b324"  --neonblue
 
 main = do
   dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
@@ -427,16 +432,18 @@ main = do
 -- xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
 
   xmonad $ docks $ defaults {
---      logHook = dynamicLogWithPP $ xmobarPP { -- to be used for exclusively dzen2 bars [ no xmobar]
-      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
+      logHook = dynamicLogWithPP $ xmobarPP { -- to be used for exclusively dzen2 bars [ no xmobar]
+--      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
             ppOutput = hPutStrLn dzenLeftBar
-         , ppTitle = xmobarColor xmobarTitleColor "" . shorten 72
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#091020"
-          , ppHidden = xmobarColor "#9a9ca0" "" . clickable
-          , ppHiddenNoWindows = xmobarColor "darkslategray" "" . clickable
+          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 72
+          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#0a0e12"
+          , ppUrgent = xmobarColor xmobarUrgentWorkspaceColor "#0a0e22" . clickable . dzenStrip          
+          , ppHidden = xmobarColor xmobarHiddenWorkspaceColor "" . clickable
+          , ppHiddenNoWindows = xmobarColor "#666362" "" . clickable
           , ppLayout = (xmobarColor "#111827" "")          
-          , ppUrgent = (xmobarColor "#ed2939" "" .wrap "[" "]")          
-          , ppSep = "   "
+--          , ppUrgent = xmobarColor "#ed2939" "" .wrap "[" "]"
+--          , ppUrgent = xmobarColor "#0a0e11" "#ed2939" . pad . xmobarStrip
+          , ppSep = "  "
 --          , ppOrder = \(ws:l:r) -> ws:r
           , ppOrder = \(ws:_) -> [ws]          
       }
@@ -471,4 +478,3 @@ defaults = def {
         logHook            = myLogHook,
         startupHook        = myStartupHook
 }
-

@@ -105,14 +105,15 @@ myModMask       = mod4Mask
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
 myWorkspaces            :: [String]
-myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "] 
+--myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "] 
+myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ] 
 myWorkspaceIndices = Map.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
     where i = fromJust $ Map.lookup ws myWorkspaceIndices
-startupWorkspace = " 1:α " -- which workspace do you want to be on after launch?
+startupWorkspace = " 1𓀡 " -- which workspace do you want to be on after launch?
 
-myNormalBorderColor  = "blueviolet"
-myFocusedBorderColor = "gold"
+myNormalBorderColor  = "#4d4dff" -- was blueviolet b4
+myFocusedBorderColor = "#11ffee" --flourescentblue
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -127,7 +128,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,  xK_p   ), spawn "dmenu_recency  -b -i -fn cinnamonroll-12 -nb '#1e1e1e' -nf '#888888' -sb '#FFFF84' -sf '#1e1e1e'")
 --    , ((modm .|. controlMask, xK_m  ), spawn "mygtkmenui -- ~/.config/GTKmenu/myGTKmenu.txt")
     , ((modm .|. controlMask, xK_p), spawn "jgmenu_run")
-    , ((modm .|. shiftMask, xK_p), spawn "rofi -show drun -modi drun -location 7 -anchor 7 -theme-str '#window { width: 45ch; }' -no-sidebar-mode -theme-str '#list-view { xoffset: 30; yoffset: 30; lines: 9; dynamic: true; fixed-height: false; }'" )
+    , ((modm .|. shiftMask, xK_p), spawn "rofi -show drun -modi drun -location 7 -anchor 7 -xoffset 30  -yoffset '-30' -theme-str '#window { width: 45ch; }' -no-sidebar-mode -theme-str '#list-view { lines: 9; dynamic: true; fixed-height: false; }'" )
     , ((modm, xK_d  ), runOrRaisePrompt largeXPConfig)
     -- launch gmrun
     , ((modm .|. shiftMask, xK_F2 ), spawn "gmrun")
@@ -319,11 +320,11 @@ myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
---
+-- myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ]
 myManageHook = composeAll
-    [ className =? "Pcmanfm"        --> doF (W.shift " 2:β ")
-    , className =? "Terminator"     --> doF (W.shift " 2:β ")
-    , className =? "vlc"            --> doF (W.shift " 4:δ ")
+    [ className =? "Pcmanfm"        --> doF (W.shift " 2𓀢 ")
+    , className =? "Terminator"     --> doF (W.shift " 2𓀢 ")
+    , className =? "vlc"            --> doF (W.shift " 4𓀤 ")
     , className =? "lxappearance"   --> doCenterFloat
     , className =? "gcolor3"   --> doCenterFloat    
     , className =? "Customize Look and Feel" --> doCenterFloat
@@ -332,14 +333,14 @@ myManageHook = composeAll
     , className =? "gcolor3"        --> doIgnore
     , className =? "oblogout"       --> doIgnore
     , isFullscreen                  --> doFullFloat 
-    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 3:γ ")
-    , className =? "Gimp-2.10"      --> doF (W.shift " 3:γ ")
-    , className =? "Gedit"           --> doF (W.shift " 2:β ")
-    , className =? "feh"            --> doF (W.shift " 4:δ ")
-    , className =? "Nitrogen"            --> doF (W.shift " 4:δ ")    
-    , className =? "pamac-manager"        --> doF (W.shift " 4:δ ")
-   , className =? "firefox"       --> doF (W.shift " 1:α ")
-      , className =? "Virt-manager" --> doF (W.shift " 5:ϵ ")
+    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 3𓀣 ")
+    , className =? "Gimp-2.10"      --> doF (W.shift " 3𓀣 ")
+    , className =? "Gedit"           --> doF (W.shift " 2𓀢 ")
+    , className =? "feh"            --> doF (W.shift " 4𓀤 ")
+    , className =? "Nitrogen"            --> doF (W.shift " 4𓀤 ")    
+    , className =? "pamac-manager"        --> doF (W.shift " 4𓀤 ")
+   , className =? "firefox"       --> doF (W.shift " 1𓀡 ")
+      , className =? "Virt-manager" --> doF (W.shift " 5𓀥 ")
     ]  
  
 -- Whether focus follows the mouse pointer.
@@ -383,7 +384,7 @@ myStartupHook = do
 --
 
 myPP = xmobarPP { 
-  ppCurrent   = xmobarColor "lightsalmon" "" ,
+  ppCurrent   = xmobarColor "springgreen" "" ,
   ppTitle     = (\str -> "" ), 
   ppLayout    = (\str -> ""),
   ppHidden    = (xmobarColor "slategray" ""),
@@ -410,7 +411,9 @@ myXmonadBar = "conky -c ~/.xmonad/xmonadWSConky | dzen2 -p -e 'enterslave=grabke
 xmobarTitleColor = "beige"
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "gold"
+xmobarCurrentWorkspaceColor = "#ffbd01" --prev flourescent blue ##11ffee; current neongold,ffbd01
+xmobarUrgentWorkspaceColor = "#ff6112" --complimentary red for fl blue
+xmobarHiddenWorkspaceColor = "#a9b324"  --neonblue
 
 main = do
 --  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
@@ -423,11 +426,11 @@ main = do
 --      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
             ppOutput = hPutStrLn xmproc
           , ppTitle = xmobarColor xmobarTitleColor "" . shorten 65
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor ""
-          , ppHidden = xmobarColor "#9a9ca0" "" . clickable
---          , ppHiddenNoWindows = xmobarColor "darkslategray" "" . clickable  --uncomment this if empty workspaces need to be displayed
-          , ppLayout = (xmobarColor "#111827" "")          
-          , ppUrgent = (xmobarColor "#ed2939" "" .wrap "[" "]")          
+          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#0a0e12"
+          , ppUrgent = xmobarColor xmobarUrgentWorkspaceColor "#0a0e22" . clickable . dzenStrip          
+          , ppHidden = xmobarColor xmobarHiddenWorkspaceColor "" . clickable
+          , ppHiddenNoWindows = xmobarColor "#4d4dff" "" . clickable
+          , ppLayout = (xmobarColor "#111827" "")                    
           , ppSep = "   "
           , ppOrder = \(ws:l:r) -> ws:r
       }
