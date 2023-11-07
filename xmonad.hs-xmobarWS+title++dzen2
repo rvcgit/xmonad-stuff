@@ -107,19 +107,20 @@ xmobarEscape = concatMap doubleLts
   where doubleLts '<' = "<<"
         doubleLts x    = [x]
 myWorkspaces            :: [String]
-myWorkspaces            = clickable . (map xmobarEscape) $ [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "]
-                                                                              
+--myWorkspaces            = clickable . (map xmobarEscape) $ [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "]
+myWorkspaces = clickable . (map xmobarEscape) $ [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 "]
+                                                                          
   where                                                                       
          clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                              (i,ws) <- zip [1..9] l,                                        
                             let n = i ]
 
-startupWorkspace = "   α " -- which workspace do you want to be on after launch?
+startupWorkspace = " 1𓀡 " -- which workspace do you want to be on after launch?
  
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "blueviolet"
-myFocusedBorderColor = "gold"
+myNormalBorderColor  = "#4d4dff" -- was blueviolet b4
+myFocusedBorderColor = "#11ffee" --flourescentblue
  
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -326,11 +327,11 @@ myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
 --
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
---
+---- myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ]
 myManageHook = composeAll
-    [ className =? "Pcmanfm"        --> doF (W.shift " 2:β ")
-    , className =? "Terminator"     --> doF (W.shift " 2:β ")
-    , className =? "vlc"            --> doF (W.shift " 4:δ ")
+    [ className =? "Pcmanfm"        --> doF (W.shift " 2𓀢 ")
+    , className =? "Terminator"     --> doF (W.shift " 2𓀢 ")
+    , className =? "vlc"            --> doF (W.shift " 3𓀣 ")
     , className =? "lxappearance"   --> doCenterFloat
     , className =? "Customize Look and Feel" --> doCenterFloat
     , resource  =? "desktop_window" --> doIgnore
@@ -339,12 +340,12 @@ myManageHook = composeAll
     , className =? "oblogout"       --> doIgnore
     , isFullscreen                  --> doFullFloat 
     , className =? "onlyoffice Desktop Editors" --> doF (W.shift " 5:ϵ ")
-    , className =? "Gimp-2.10"      --> doF (W.shift " 3:γ ")
-    , className =? "Gimp"           --> doF (W.shift " 3:γ ")
-    , className =? "Feh"            --> doF (W.shift " 4:δ ")
-    , className =? "firefox"        --> doF (W.shift " 1:α ")
-   , className =? "Navigator"       --> doF (W.shift " 1:α ")
-      , className =? "Virt-manager" --> doF (W.shift " 5:ϵ ")
+    , className =? "Gimp-2.10"      --> doF (W.shift " 3𓀣 ")
+    , className =? "Gimp"           --> doF (W.shift " 3𓀣 ")
+    , className =? "Feh"            --> doF (W.shift " 4𓀤 ")
+    , className =? "firefox"        --> doF (W.shift " 1𓀡 ")
+   , className =? "Navigator"       --> doF (W.shift " 1𓀡 ")
+      , className =? "Virt-manager" --> doF (W.shift " 5𓀥 ")
     ]
     
  
@@ -417,7 +418,9 @@ myLogHook = do
 xmobarTitleColor = "beige"
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "gold"
+xmobarCurrentWorkspaceColor = "#ffbd01" --prev flourescent blue ##11ffee; current neongold,ffbd01
+xmobarUrgentWorkspaceColor = "#ff6112" --complimentary red for fl blue
+xmobarHiddenWorkspaceColor = "#a9b324"  --neonblue
 
 main = do
   dzenRightBar <- spawnPipe "~/.xmonad/dzenWSbar"
@@ -468,4 +471,5 @@ defaults = def {
         logHook            = myLogHook,
         startupHook        = myStartupHook
 }
+
 
