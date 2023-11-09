@@ -423,7 +423,7 @@ xmobarTitleColor = "beige"
 -- Color of current/Urgent/Hidden workspace in xmobar.
 xmobarCurrentWorkspaceColor = "#ffbd01" --prev flourescent blue ##11ffee; current neongold,ffbd01
 xmobarUrgentWorkspaceColor = "#ff6112" --complimentary red for fl blue
-xmobarHiddenWorkspaceColor = "#a9b324"  --neonblue
+xmobarHiddenWorkspaceColor = "#d8dee9"  --offwhite
 
 main = do
   dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"

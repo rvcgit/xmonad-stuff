@@ -66,7 +66,7 @@ largeXPConfig = mXPConfig
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "urxvtc"
+myTerminal      = "alacritty"
  
 -- Width of the window border in pixels.
 --
@@ -106,14 +106,16 @@ myModMask       = mod4Mask
 --
 myWorkspaces            :: [String]
 --myWorkspaces            = [" 1:α "," 2:β "," 3:γ ", " 4:δ "," 5:ϵ "," 6:ζ "," 7:η "," 8:θ "," 9:λ "] 
-myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ] 
+--myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ] 
+myWorkspaces			= [" 1_١ ",	" 2_٢ ",	" 3_٣ ", " 4_٤ ", " 5_٥ ", " 6_٦ ",	" 7_٧ ", " 8_٨ ", " 9_٩ "]
+--myWorkspaces           = [" ௧ ", " ௨ ", " ௩ ", " ௪ ", " ௫ ", " ௬ ", " ௭ ", " ௮ ", " ௯ "]
 myWorkspaceIndices = Map.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 clickable ws = "<action=xdotool key super+"++show i++">"++ws++"</action>"
     where i = fromJust $ Map.lookup ws myWorkspaceIndices
 startupWorkspace = " 1𓀡 " -- which workspace do you want to be on after launch?
 
 myNormalBorderColor  = "#4d4dff" -- was blueviolet b4
-myFocusedBorderColor = "#11ffee" --flourescentblue
+myFocusedBorderColor = "#04d9ff" --neon blue
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -321,10 +323,13 @@ myLayout = avoidStruts ( tiled ||| Mirror tiled ||| Full)
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 -- myWorkspaces            = [" 1𓀡 ", " 2𓀢 ", " 3𓀣 ", " 4𓀤 ", " 5𓀥 ", " 6𓀦 ", " 7𓀧 ", " 8𓀨 ", " 9𓀩 " ]
+--- myworkspaces			= [ "1_١",	"2_٢",	"3_٣",	"4_٤",	"5_٥",	"6_٦",	"7_٧",	"8_٨", "9_٩" ]
+---myWorkspaces           = [" 1_௧ ", " 2_௨ ", " 3_௩ ", " 4_௪ ", " 5_௫ ", " 6_௬ ", " 7_௭ ", " 8_௮ ", " 9_௯ "]
+---myWorkspaces      = ["1:𐅑" "2:𐅒" "3:𐅓" "4:𐅔" "5:𐅕" "6:𐅖" "7:𐅗" "8:𐅘" "9:𐅙"]
 myManageHook = composeAll
-    [ className =? "Pcmanfm"        --> doF (W.shift " 2𓀢 ")
-    , className =? "Terminator"     --> doF (W.shift " 2𓀢 ")
-    , className =? "vlc"            --> doF (W.shift " 4𓀤 ")
+    [ className =? "Pcmanfm"        --> doF (W.shift " 2_٢ ")
+    , className =? "Terminator"     --> doF (W.shift " 2_٢ ")
+    , className =? "vlc"            --> doF (W.shift " 4_٤ ")
     , className =? "lxappearance"   --> doCenterFloat
     , className =? "gcolor3"   --> doCenterFloat    
     , className =? "Customize Look and Feel" --> doCenterFloat
@@ -333,14 +338,14 @@ myManageHook = composeAll
     , className =? "gcolor3"        --> doIgnore
     , className =? "oblogout"       --> doIgnore
     , isFullscreen                  --> doFullFloat 
-    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 3𓀣 ")
-    , className =? "Gimp-2.10"      --> doF (W.shift " 3𓀣 ")
-    , className =? "Gedit"           --> doF (W.shift " 2𓀢 ")
-    , className =? "feh"            --> doF (W.shift " 4𓀤 ")
-    , className =? "Nitrogen"            --> doF (W.shift " 4𓀤 ")    
-    , className =? "pamac-manager"        --> doF (W.shift " 4𓀤 ")
-   , className =? "firefox"       --> doF (W.shift " 1𓀡 ")
-      , className =? "Virt-manager" --> doF (W.shift " 5𓀥 ")
+    , className =? "ONLYOFFICE Desktop Editors" --> doF (W.shift " 3_٣ ")
+    , className =? "Gimp-2.10"      --> doF (W.shift " 3_٣ ")
+    , className =? "Gedit"           --> doF (W.shift " 2_٢ ")
+    , className =? "feh"            --> doF (W.shift " 4_٤ ")
+    , className =? "Nitrogen"            --> doF (W.shift " 4_٤ ")    
+    , className =? "pamac-manager"        --> doF (W.shift " 4_٤ ")
+   , className =? "firefox"       --> doF (W.shift " 1_١ ")
+      , className =? "Virt-manager" --> doF (W.shift " 5_٥ ")
     ]  
  
 -- Whether focus follows the mouse pointer.
@@ -411,9 +416,9 @@ myXmonadBar = "conky -c ~/.xmonad/xmonadWSConky | dzen2 -p -e 'enterslave=grabke
 xmobarTitleColor = "beige"
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#ffbd01" --prev flourescent blue ##11ffee; current neongold,ffbd01
+xmobarCurrentWorkspaceColor = "#04d9ff" --prev flourescent blue ##04d9ff; current neongold,ffbd01
 xmobarUrgentWorkspaceColor = "#ff6112" --complimentary red for fl blue
-xmobarHiddenWorkspaceColor = "#a9b324"  --neonblue
+xmobarHiddenWorkspaceColor = "#7df9ff"  --electricblue --fbffff [neonwhite]
 
 main = do
 --  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
@@ -425,9 +430,9 @@ main = do
       logHook = dynamicLogWithPP $ xmobarPP { -- to be used for exclusively dzen2 bars [ no xmobar]
 --      logHook = dynamicLogWithPP $ myPP {  -- to be used for xmobar for workspace and dzen2 for rest
             ppOutput = hPutStrLn xmproc
-          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 65
-          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#0a0e12"
-          , ppUrgent = xmobarColor xmobarUrgentWorkspaceColor "#0a0e22" . clickable . dzenStrip          
+          , ppTitle = xmobarColor xmobarTitleColor "" . shorten 60
+          , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#0a0e1a"
+          , ppUrgent = xmobarColor xmobarUrgentWorkspaceColor "#0a0e2a" . clickable . dzenStrip          
           , ppHidden = xmobarColor xmobarHiddenWorkspaceColor "" . clickable
           , ppHiddenNoWindows = xmobarColor "#4d4dff" "" . clickable
           , ppLayout = (xmobarColor "#111827" "")                    
