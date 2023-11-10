@@ -66,7 +66,7 @@ largeXPConfig = mXPConfig
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "alacritty"
+myTerminal      = "urxvtc"
  
 -- Width of the window border in pixels.
 --
@@ -124,6 +124,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
  
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+    , ((modm .|. controlMask, xK_Return), spawn "alacritty")
  
     -- launch dmenu
     --, ((modm, xK_p  ), spawn "dmenu_run -fn -bitstream-*-*-*-*-*-11-*-*-*-*-*-*-*")
@@ -413,12 +414,12 @@ myLogHook = do
 myXmonadBar = "conky -c ~/.xmonad/xmonadWSConky | dzen2 -p -e 'enterslave=grabkeys;leaveslave=ungrabkeys; button4=scrollup;button5=scrolldown; key_Left=scrollup;key_Right=scrolldown; button1=menuexec' -h '18' -ta l -x 5 -y 2 -fn 'Inconsolata Nerd Font:pixelsize=11:antialias=true' -w 290 -expand right"
 -- Color of current window title in xmobar.
   -- Used to be #00CC00
-xmobarTitleColor = "beige"
+xmobarTitleColor = "#fbffff"
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#04d9ff" --prev flourescent blue ##04d9ff; current neongold,ffbd01
+xmobarCurrentWorkspaceColor = "#ffbd01" --prev neon blue ##04d9ff; neongold,ffbd01
 xmobarUrgentWorkspaceColor = "#ff6112" --complimentary red for fl blue
-xmobarHiddenWorkspaceColor = "#7df9ff"  --electricblue --fbffff [neonwhite]
+xmobarHiddenWorkspaceColor = "#fbffff"  --electricblue --fbffff [neonwhite]
 
 main = do
 --  dzenRightBar <- spawnPipe "~/.xmonad/dzenXmobar"
@@ -434,7 +435,7 @@ main = do
           , ppCurrent = xmobarColor xmobarCurrentWorkspaceColor "#0a0e1a"
           , ppUrgent = xmobarColor xmobarUrgentWorkspaceColor "#0a0e2a" . clickable . dzenStrip          
           , ppHidden = xmobarColor xmobarHiddenWorkspaceColor "" . clickable
-          , ppHiddenNoWindows = xmobarColor "#4d4dff" "" . clickable
+          , ppHiddenNoWindows = xmobarColor "#7E735F" "" . clickable
           , ppLayout = (xmobarColor "#111827" "")                    
           , ppSep = "   "
           , ppOrder = \(ws:l:r) -> ws:r
@@ -470,4 +471,3 @@ defaults = def {
         logHook            = myLogHook,
         startupHook        = myStartupHook
 }
-
